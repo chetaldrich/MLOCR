@@ -76,7 +76,9 @@
 	   \subsection*{The Idea}
      The idea for this project is to use computer vision to determine the value of a handwritten number. We plan to implement the computer vision algorithm by using machine learning techniques, including but not limited to decision trees and naive Bayes inference.
      \subsection*{Possible Implementation Details}
-     Currently, the hope is to make use of the MNIST database of handwritten digits as a test set for our machine learning algorithm. This database includes about 60,000 examples that we can use as input. \\\\
-     We then plan to process the information given in the database using Python and the NumPy package, which should allow for simple (given the problem) analysis of the data.
-     
+     Currently, the hope is to make use of the Modified National Institute of Standards and Technology (MNIST) database of handwritten digits as a test set for our machine learning algorithm. This database includes about 60,000 examples that we can use as input to optimize the algorithm's ability to determine the difference between characters. \\\\
+     Although the specifics of the algorithm are not terribly clear yet, given that we haven't discussed machine learning yet, some preliminary research on machine learning algorithms that would be useful for the project brought up a random forest, which is apparently an easier algorithm to use given little knowledge of the underlying model governing the data. It also prevents problems associated with the high variance of using a single decision tree. \\\\
+     The most effective way to incorporate the data from the images is not yet clear, but we suspect that the best way to approach the problem given the small image size will be to examine the pixel information, construct features based on what we observe on average in the dataset, and apply the random forest as a classification tree to determine each number.\\\\
+     We then plan to process the information given in the database using Python and the NumPy package, which should allow for robust analysis of the data on hand for analyzing new samples.
+
     \end{document}
