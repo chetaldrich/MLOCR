@@ -1,5 +1,4 @@
 # Python generated files
-
 *.pyc
 
 # OS generated files
@@ -13,3 +12,6 @@
 *.fdb_latexmk
 *.fls
 *.pdf
+
+# MNIST Data Files
+*-ubyte
