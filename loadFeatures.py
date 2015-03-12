@@ -2,8 +2,11 @@ from numpy import *
 from mnist import *
 from util import Counter
 
-# def loadData():
-#     images, labels = load_mnist('training')
+def loadData():
+    images, labels = load_mnist('training')
+    featureList = defineFeatures(images)
+
+    return featureList, labels
 
 def defineFeatures(imageList, n):
     imageList = imageList[0:]
@@ -19,11 +22,10 @@ def defineFeatures(imageList, n):
                 # imgFeature[(i, j)] = image[i][j]
         featureList.append(imgFeature)
     return featureList
+    
 
 def main():
-    images, labels = load_mnist('training')
-    featureList = defineFeatures(images)
+    pass
 
 if __name__=="__main__":
-
     main()
