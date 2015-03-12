@@ -23,10 +23,11 @@ def loadTrainingData(n=None):
     validationImages, validationLabels = images[split:], labels[split:]
 
     # get features for data
-    trainingData = defineFeatures(trainingImages)
-    validationData = defineFeatures(validationImages)
+    trainingData, trainingFeatures = defineFeatures(trainingImages)
+    validationData, validationFeatures = defineFeatures(validationImages)
 
-    return trainingData, trainingLabels, validationData, validationLabels
+
+    return trainingData, trainingLabels, validationData, validationLabels, trainingFeatures
 
 def loadTestingData(n=None):
     """
@@ -53,18 +54,20 @@ def defineFeatures(imageList):
     or not (1) for a list of images and pixel values
     """
     featureList = []
+    features = []
     for image in imageList:
         # create feature of on/off for (x, y) positions in image
         imgFeature = Counter()
         for x in range(len(image)):
             for y in range(len(image[x])):
+                features.append((x,y))
                 if image[x][y] == 0:
                     imgFeature[(x, y)] = 0
                 else:
                     imgFeature[(x, y)] = 1
         featureList.append(imgFeature)
 
-    return featureList
+    return featureList, features
 
 
 def main():
