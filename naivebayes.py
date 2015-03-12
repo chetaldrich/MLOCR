@@ -61,7 +61,8 @@ class NaiveBayes:
         # Finally, we loop over the features for each datum and add each feature once
         # for each occurrence.
         for feature in trainingData[i]:
-            countFeature[label][feature] += 1
+            if trainingData[i][feature] != 0:
+                countFeature[label][feature] += 1
     self.probLabel = copy.deepcopy(countLabel)
     self.probLabel.normalize()
 
@@ -83,7 +84,8 @@ class NaiveBayes:
             probForK[k][label] = util.Counter()
             # find probability of each feature given each label
             for feature in self.features:
-                probForK[k][label][feature] = float(countFeature[label][feature] + k) / (countLabel[label] + k * len(self.legalLabels))
+                if countFeature[label] != 0:
+                    probForK[k][label][feature] = float(countFeature[label][feature] + k) / (countLabel[label] + k * len(self.legalLabels))
 
         # set probabilities for features and classify validation data
         self.probFeature = probForK[k]
@@ -183,7 +185,7 @@ def main():
     naivebayes = NaiveBayes(range(10))
 
     print "Loading Testing Data...."
-    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(10)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(100)
 
     print "Training Naive Bayes Classifier...."
     naivebayes.train(trainingData, trainingLabels, validationData, validationLabels, features, True)
