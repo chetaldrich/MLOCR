@@ -1,31 +1,51 @@
-from numpy import *
 from mnist import *
 from util import Counter
 
 def loadData():
+    """
+    loadData() pulls data from MNIST training set, splits it into training and
+    validation data, then parses the data into features
+    """
+    # load data from MNIST files
     images, labels = load_mnist('training')
-    featureList = defineFeatures(images)
+    # find out where to split so that 5/6 of data is training
+    # and 1/6 is validation
+    split = float(len(labels) * 5 / 6)
 
-    return featureList, labels
+    # split training and validation images/labels
+    trainingImages, trainingLabels = images[:split], labels[:split]
+    validationImages, validationLabels = images[split:], labels[split:]
 
-def defineFeatures(imageList, n):
-    imageList = imageList[0:]
+    # get features for data
+    trainingData = defineFeatures(trainingImages)
+    validationData = defineFeatures(validationImages)
+
+    return trainingData, trainingLabels, validationData, validationLabels
+
+
+def defineFeatures(imageList):
+    """
+    defineFeatures() defines a simple feature of a pixel either being white (0)
+    or not (1) for a list of images and pixel values
+    """
     featureList = []
     for image in imageList:
+        # create feature of on/off for (x, y) positions in image
         imgFeature = Counter()
-        for i in range(len(image)):
-            for j in range(len(image[i])):
-                if image[i][j] == 0:
-                    imgFeature[(i, j)] = 0
+        for x in range(len(image)):
+            for y in range(len(image[x])):
+                if image[x][y] == 0:
+                    imgFeature[(x, y)] = 0
                 else:
-                    imgFeature[(i, j)] = 1
-                # imgFeature[(i, j)] = image[i][j]
+                    imgFeature[(x, y)] = 1
         featureList.append(imgFeature)
+
     return featureList
-    
+
 
 def main():
-    pass
+    loadData()
+
 
 if __name__=="__main__":
     main()
