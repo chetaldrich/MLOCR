@@ -15,7 +15,7 @@ def loadTrainingData(n):
 
     # find out where to split so that 5/6 of data is training
     # and 1/6 is validation
-    split = float(len(labels) * 1 / 10)
+    split = float(len(labels) * 5 / 6)
 
     # split training and validation images/labels
     trainingImages, trainingLabels = images[:split], labels[:split]
