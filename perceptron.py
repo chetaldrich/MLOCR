@@ -12,7 +12,7 @@ class Perceptron:
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, tune):
         """
-        train() updates the perceptron prototype vectors over the training values given.  
+        train() updates the perceptron prototype vectors over the training values given.
         """
         # TODO: figure out what to pass in here
         self.features = None
@@ -70,3 +70,44 @@ class Perceptron:
             # add classification guess for data by getting the argmax
             guesses.append(values.argMax())
         return guesses
+
+    def test(self, testingData, testingLabels):
+        """
+        test() gets a classification for the training data points and checks
+        if it matches the labels
+        """
+        # get classification of data
+        classified = self.classify(testingData)
+
+        countCorrect = 0
+        # check if classification matches label
+        for i in range(len(testingLabels)):
+            if testingLabels[i] == classified[i]:
+                countCorrect += 1
+
+        print "Number of Correct Classifications"
+        print "================================="
+        print countCorrect
+
+        print "Percent of Correct Classifications"
+        print "=================================="
+        print float(countCorrect) / len(testingLabels) * 100.0
+
+
+def main():
+    perceptron = Perceptron(range(10), 3)
+
+    print "loading testing data"
+    trainingData, trainingLabels, validationData, validationLabels = loadTrainingData(12000)
+
+    print "training perceptron"
+    perceptron.train(trainingData, trainingLabels, validationData, validationLabels, False)
+
+    print "loading testing data"
+    testingData, testingLabels = loadTestingData(100)
+
+    print "testing perceptron"
+    perceptron.test(testingData, testingLabels)
+
+if __name__=="__main__":
+    main()
