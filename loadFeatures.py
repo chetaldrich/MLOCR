@@ -1,7 +1,7 @@
 from mnist import *
 from util import Counter
 
-def loadTrainingData(n):
+def loadTrainingData(n=None):
     """
     loadTrainingData() pulls trainig data from MNIST training set, splits it into training and
     validation data, then parses the data into features
@@ -10,12 +10,13 @@ def loadTrainingData(n):
     images, labels = load_mnist('training')
 
     # only return n data points
-    images = images[:n]
-    labels = labels[:n]
+    if n:
+        images = images[:n]
+        labels = labels[:n]
 
     # find out where to split so that 5/6 of data is training
     # and 1/6 is validation
-    split = float(len(labels) * 1 / 10)
+    split = float(len(labels) * 5 / 6)
 
     # split training and validation images/labels
     trainingImages, trainingLabels = images[:split], labels[:split]
@@ -27,7 +28,7 @@ def loadTrainingData(n):
 
     return trainingData, trainingLabels, validationData, validationLabels
 
-def loadTestingData(n):
+def loadTestingData(n=None):
     """
     loadTestingData() pulls testing data from MNIST training set,
     then parses the data into features
@@ -36,8 +37,9 @@ def loadTestingData(n):
     images, labels = load_mnist('testing')
 
     # only return n data points
-    images = images[:n]
-    labels = labels[:n]
+    if n:
+        images = images[:n]
+        labels = labels[:n]
 
     # get features for data
     testingData = defineFeatures(images)
