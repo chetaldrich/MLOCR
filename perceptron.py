@@ -1,14 +1,20 @@
 import util
 from loadFeatures import *
+from copy import deepcopy
+
 
 class Perceptron:
 
     def __init__(self, legalLabels, iterations):
         self.legalLabels = legalLabels
         self.iterations = iterations
+        self.initWeights()
+
+    def initWeights(self):
         self.weights = {}
-        for label in legalLabels:
+        for label in self.legalLabels:
             self.weights[label] = util.Counter()
+
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, tune):
         """
@@ -18,12 +24,17 @@ class Perceptron:
         self.features = None
 
         if (tune):
-            iterationValues = [ 1,3, 5, 10, 15, 20]
-            tune(iterationValues, validationData, validationLabels)
+            iterationValues = [1, 3, 5, 10, 15, 20]
+            self.tune(trainingData, trainingLabels, validationData, validationLabels, iterationValues)
         else:
-            iterationValues = [self.iterations]
+            self.trainingHelper(trainingData, trainingLabels, self.iterations)
 
-        for i in range(iterationValues[0]):
+    def trainingHelper(self, trainingData, trainingLabels, iterations):
+        """
+        trainingHelper finds the classification using the perceptron weights
+        and updates weights if needed
+        """
+        for i in range(iterations):
             for j in range(len(trainingData)):
                 values = util.Counter()
 
@@ -40,15 +51,40 @@ class Perceptron:
                         self.weights[trainingLabels[j]][key] += value
                         self.weights[values.argMax()][key] -= value
 
-
-    def tune(self, validationData, validationLabels):
+    def tune(self, trainingData, trainingLabels, validationData, validationLabels, iterationValues):
         """
         tune() tunes the data to the best number of iterations over the validation data.
 
-        TODO: Actually make this work.
-
         """
-        pass
+        tuningWeights = Counter()
+        correctlyClassified = Counter()
+
+        # classify for each number of iterations
+        for index, iteration in enumerate(iterationValues):
+            # just do the number of extra iterations required
+            if index != 0:
+                extraIterations = iterationValues[index] - iterationValues[index - 1]
+            else:
+                extraIterations = iteration
+
+            # train extra iterations
+            self.trainingHelper(trainingData, trainingLabels, extraIterations)
+
+            # save weights for each number of iterations
+            tuningWeights[iteration] = deepcopy(self.weights)
+
+            # classify data
+            classified = self.classify(validationData)
+            # check if classification matches label
+            for i in range(len(validationLabels)):
+                if validationLabels[i] == classified[i]:
+                    correctlyClassified[iteration] += 1
+
+        # find iteration value with most correct classifications
+        # use those weights when classifying
+        bestIterationValue = correctlyClassified.argMax()
+        self.weights = tuningWeights[bestIterationValue]
+
 
     def classify(self, data):
         """
@@ -98,7 +134,7 @@ def main():
     perceptron = Perceptron(range(10), 3)
 
     print "loading testing data"
-    trainingData, trainingLabels, validationData, validationLabels = loadTrainingData(12000)
+    trainingData, trainingLabels, validationData, validationLabels = loadTrainingData(600)
 
     print "training perceptron"
     perceptron.train(trainingData, trainingLabels, validationData, validationLabels, False)
