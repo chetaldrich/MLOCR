@@ -183,18 +183,17 @@ def main():
     naivebayes = NaiveBayes(range(10))
 
     print "Loading Testing Data...."
-    trainingData, trainingLabels, validationData, validationLabels = loadTrainingData(12000)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(10)
 
-    # TODO: Pull the features from loadFeatures.py (not implemented yet)
     print "Training Naive Bayes Classifier...."
-    NaiveBayes.train(trainingData, trainingLabels, validationData, validationLabels, , features, False)
+    naivebayes.train(trainingData, trainingLabels, validationData, validationLabels, features, True)
 
 
     print "Loading Testing Data...."
-    testingData, testingLabels = loadTestingData(100)
+    testingData, testingLabels = loadTestingData(10)
 
     print "Testing Naive Bayes Classifier...."
-    NaiveBayes.test(testingData, testingLabels)
+    naivebayes.test(testingData, testingLabels)
 
 if __name__=="__main__":
     main()
