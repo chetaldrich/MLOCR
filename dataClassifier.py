@@ -1,53 +1,69 @@
 import naivebayes
 import perceptron
-import mnist
-import util
-import sys
 import loadFeatures
 import argparse
 
 
 def readCommand():
+
+    # default values
+    numTestValues = 100
+    numTrainValues = 100
+
     parser = argparse.ArgumentParser()
+
     parser.add_argument("-c", type = str, choices=["naivebayes", "perceptron"], help="selects the classifier for use with the MNIST data")
+
+    parser.add_argument("--train", type = int, help="selects the number of training data samples to be used by the classifier")
+
+    parser.add_argument("--test", type = int,  help="elects the number of testing data samples to be used by the classifier")
+
     args = parser.parse_args()
 
-    if args.c == "naivebayes":
-        runNaiveBayes()
-    elif args.c == "perceptron":
-        runPerceptron()
+    if args.train != None:
+        numTrainValues = args.train
+    if args.test != None:
+        numTestValues = args.test
 
-def runPerceptron():
+
+    if args.c == "naivebayes":
+        runNaiveBayes(numTrainValues, numTestValues)
+    elif args.c == "perceptron":
+        runPerceptron(numTrainValues, numTestValues)
+
+def runPerceptron(numTrainValues, numTestValues):
     perceptronClassifier = perceptron.Perceptron(range(10), 3)
 
     print "Loading Testing Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(600)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues)
 
     print "Training Perceptron....\n"
     perceptronClassifier.train(trainingData, trainingLabels, validationData, validationLabels, False)
 
     print "Loading Testing Data....\n"
-    testingData, testingLabels = loadFeatures.loadTestingData(100)
+    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues)
 
     print "Testing Perceptron....\n"
     perceptronClassifier.test(testingData, testingLabels)
 
 
-def runNaiveBayes():
+def runNaiveBayes(numTrainValues, numTestValues):
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     print "Loading Training Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(50)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues)
 
     print "Training Naive Bayes Classifier....\n"
     naiveBayesClassifier.train(trainingData, trainingLabels, validationData, validationLabels, features, False)
 
     print "Loading Testing Data....\n"
-    testingData, testingLabels = loadFeatures.loadTestingData(50)
+    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues)
 
     print "Testing Naive Bayes Classifier....\n"
     naiveBayesClassifier.test(testingData, testingLabels)
 
 
 if __name__ == "__main__":
+
+    # begin program
     readCommand()
