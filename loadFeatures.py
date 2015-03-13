@@ -14,7 +14,7 @@ def loadTrainingData(n=None):
         images = images[:n]
         labels = labels[:n]
 
-    print "label length:", len(labels)
+    # print "label length:", len(labels)
 
 
     # find out where to split so that 5/6 of data is training
@@ -28,7 +28,6 @@ def loadTrainingData(n=None):
     # get features for data
     trainingData, trainingFeatures = defineFeatures(trainingImages)
     validationData, validationFeatures = defineFeatures(validationImages)
-
 
     return trainingData, trainingLabels, validationData, validationLabels, trainingFeatures
 
@@ -46,7 +45,7 @@ def loadTestingData(n=None):
         labels = labels[:n]
 
     # get features for data
-    testingData = defineFeatures(images)
+    testingData = defineFeatures(images)[0]
 
     return testingData, labels
 
