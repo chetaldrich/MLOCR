@@ -1,7 +1,7 @@
 from mnist import *
 from util import Counter
 
-def loadTrainingData(n=None):
+def loadTrainingData(n=None, chop=0):
     """
     loadTrainingData() pulls trainig data from MNIST training set, splits it into training and
     validation data, then parses the data into features
@@ -26,12 +26,12 @@ def loadTrainingData(n=None):
     validationImages, validationLabels = images[split:], labels[split:]
 
     # get features for data
-    trainingData, trainingFeatures = defineFeatures(trainingImages)
-    validationData, validationFeatures = defineFeatures(validationImages)
+    trainingData, trainingFeatures = defineFeatures(trainingImages, chop)
+    validationData, validationFeatures = defineFeatures(validationImages, chop)
 
     return trainingData, trainingLabels, validationData, validationLabels, trainingFeatures
 
-def loadTestingData(n=None):
+def loadTestingData(n=None, chop=0):
     """
     loadTestingData() pulls testing data from MNIST training set,
     then parses the data into features
@@ -45,28 +45,31 @@ def loadTestingData(n=None):
         labels = labels[:n]
 
     # get features for data
-    testingData = defineFeatures(images)[0]
+    testingData = defineFeatures(images, chop)[0]
 
     return testingData, labels
 
 
-def defineFeatures(imageList):
+def defineFeatures(imageList, chop):
     """
     defineFeatures() defines a simple feature of a pixel either being white (0)
     or not (1) for a list of images and pixel values
+
+    chops off pixels on outside of image for faster (but less accurate) classification
     """
     featureList = []
     features = []
     for image in imageList:
         # create feature of on/off for (x, y) positions in image
         imgFeature = Counter()
-        for x in range(len(image)):
-            for y in range(len(image[x])):
+        for x in range(chop, len(image) + 1 - chop):
+            for y in range(chop, len(image[x]) + 1 - chop):
                 features.append((x,y))
                 if image[x][y] == 0:
                     imgFeature[(x, y)] = 0
                 else:
                     imgFeature[(x, y)] = 1
+
         featureList.append(imgFeature)
 
     return featureList, features
