@@ -1,4 +1,5 @@
 import util
+import perceptronWeights
 from loadFeatures import *
 from copy import deepcopy
 
@@ -10,11 +11,21 @@ class Perceptron:
         self.iterations = iterations
         self.initWeights()
 
+    def printToFile(self):
+        file = open("perceptronWeights.py", "w+")
+        print >>file, "def getSavedWeights():\n\treturn {0}".format(self.weights)
+        file.close()
+
     def initWeights(self):
         self.weights = {}
         for label in self.legalLabels:
             self.weights[label] = util.Counter()
 
+    def useTrainedWeights(self):
+        """
+        gets dictionary of previously trained weights from file
+        """
+        self.weights = perceptronWeights.getSavedWeights()
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, tune):
         """
@@ -26,6 +37,8 @@ class Perceptron:
             self.tune(trainingData, trainingLabels, validationData, validationLabels, iterationValues)
         else:
             self.trainingHelper(trainingData, trainingLabels, self.iterations)
+
+        self.printToFile()
 
     def trainingHelper(self, trainingData, trainingLabels, iterations):
         """
