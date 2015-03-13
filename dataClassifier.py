@@ -32,11 +32,11 @@ def readCommand():
 
 
     if args.c == "naivebayes":
-        runNaiveBayes(numTrainValues, numTestValues)
+        runNaiveBayes(numTrainValues, numTestValues, pixels)
     elif args.c == "perceptron":
-        runPerceptron(numTrainValues, numTestValues)
+        runPerceptron(numTrainValues, numTestValues, pixels)
 
-def runPerceptron(numTrainValues, numTestValues):
+def runPerceptron(numTrainValues, numTestValues, pixels):
     perceptronClassifier = perceptron.Perceptron(range(10), 3)
 
     print "Loading Testing Data....\n"
@@ -52,17 +52,17 @@ def runPerceptron(numTrainValues, numTestValues):
     perceptronClassifier.test(testingData, testingLabels)
 
 
-def runNaiveBayes(numTrainValues, numTestValues):
+def runNaiveBayes(numTrainValues, numTestValues, pixels):
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     print "Loading Training Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels)
 
     print "Training Naive Bayes Classifier....\n"
     naiveBayesClassifier.train(trainingData, trainingLabels, validationData, validationLabels, features, False)
 
     print "Loading Testing Data....\n"
-    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues)
+    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)
 
     print "Testing Naive Bayes Classifier....\n"
     naiveBayesClassifier.test(testingData, testingLabels)

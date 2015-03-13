@@ -14,9 +14,6 @@ def loadTrainingData(n=None, chop=0):
         images = images[:n]
         labels = labels[:n]
 
-    # print "label length:", len(labels)
-
-
     # find out where to split so that 5/6 of data is training
     # and 1/6 is validation
     split = float(len(labels) * 5 / 6)
