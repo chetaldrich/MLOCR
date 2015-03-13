@@ -75,7 +75,7 @@ def load_mnist(dataset="training", digits=None, path=None, asbytes=False, select
 
     if path is None:
         try:
-            path = "."
+            path = "./mnist"
         except KeyError:
             raise ValueError("Unspecified path requires environment variable $MNIST to be set")
 

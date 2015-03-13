@@ -192,7 +192,6 @@ def main():
 
     print "Loading Testing Data...."
     testingData, testingLabels = loadTestingData(50)
-    print type(testingData)
 
     print "Testing Naive Bayes Classifier...."
     naivebayes.test(testingData, testingLabels)
