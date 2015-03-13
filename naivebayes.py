@@ -1,7 +1,9 @@
 from loadFeatures import *
+from progressBar import *
 import util
 import math
 import copy
+import time
 
 class NaiveBayes:
     """
@@ -27,9 +29,10 @@ class NaiveBayes:
         Outside shell to call the method.
         """
         self.features = allFeatures # dictionary with all valid features
+        self.automaticTuning = tune
 
 
-        if (tune):
+        if (self.automaticTuning):
             kgrid = [0.001, 0.01, 0.05, 0.1, 0.5, 1, 5, 10, 20, 50]
         else:
             kgrid = [self.k]
@@ -50,7 +53,11 @@ class NaiveBayes:
         countLabel = util.Counter() # in form k = label, v = numOfL
         countFeature = util.Counter()
         # We begin looking over the training data here.
+        progressBar = ProgressBar(20, len(trainingData), "Counting Data")
         for i in range(len(trainingData)):
+            # update our progress bar
+            progressBar.update(i)
+
             label = trainingLabels[i]
             # Labels are counted at each point they are seen here.
             countLabel[label] += 1
@@ -62,6 +69,8 @@ class NaiveBayes:
             for feature in trainingData[i]:
                 if trainingData[i][feature] != 0:
                     countFeature[label][feature] += 1
+        progressBar.clear()
+
         self.probLabel = copy.deepcopy(countLabel)
         self.probLabel.normalize()
 
@@ -122,10 +131,15 @@ class NaiveBayes:
         """
         guesses = []
         self.posteriors = [] # Log posteriors are stored for later data analysis (autograder).
-        for datum in testData:
+        counter = 0
+        size = len(testData)
+        progressBar = ProgressBar(20, len(testData), "Classifying Data")
+        for index, datum in enumerate(testData):
+            progressBar.update(index)
             posterior = self.calculateLogJointProbabilities(datum)
             guesses.append(posterior.argMax())
             self.posteriors.append(posterior)
+        progressBar.clear()
         return guesses
 
     def calculateLogJointProbabilities(self, datum):
