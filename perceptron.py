@@ -2,6 +2,7 @@ import util
 import perceptronWeights
 from loadFeatures import *
 from copy import deepcopy
+from progressBar import ProgressBar
 
 
 class Perceptron:
@@ -46,7 +47,11 @@ class Perceptron:
         and updates weights if needed
         """
         for i in range(iterations):
+            progressBar = ProgressBar(100, len(trainingData), "Learning Weights, Iteration {0} of {1}"
+                .format(i + 1, iterations))
             for j in range(len(trainingData)):
+                progressBar.update(j)
+
                 values = util.Counter()
 
                 # Go over each label, and create the value from the training data and current vectors
@@ -61,6 +66,7 @@ class Perceptron:
                     for key, value in trainingData[j].items():
                         self.weights[trainingLabels[j]][key] += value
                         self.weights[values.argMax()][key] -= value
+            progressBar.clear()
 
     def tune(self, trainingData, trainingLabels, validationData, validationLabels, iterationValues):
         """
@@ -103,7 +109,9 @@ class Perceptron:
 
         """
         guesses = []
-        for entry in data:
+        progressBar = ProgressBar(100, len(data), "Classifying Data")
+        for index, entry in enumerate(data):
+            progressBar.update(index)
             values = util.Counter()
 
             # for each label, compute activation
@@ -116,6 +124,7 @@ class Perceptron:
 
             # add classification guess for data by getting the argmax
             guesses.append(values.argMax())
+        progressBar.clear()
         return guesses
 
     def test(self, testingData, testingLabels):

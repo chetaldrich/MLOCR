@@ -1,5 +1,5 @@
 from loadFeatures import *
-from progressBar import *
+from progressBar import ProgressBar
 import util
 import math
 import copy

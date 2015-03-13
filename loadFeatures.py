@@ -1,5 +1,6 @@
 from mnist import *
 from util import Counter
+from progressBar import ProgressBar
 
 def loadTrainingData(n=None, chop=0):
     """
@@ -56,7 +57,11 @@ def defineFeatures(imageList, chop):
     """
     featureList = []
     features = []
-    for image in imageList:
+    progressBar = ProgressBar(100, len(imageList), "Getting Features for Images")
+    for index, image in enumerate(imageList):
+        # update progress
+        progressBar.update(index)
+
         # create feature of on/off for (x, y) positions in image
         imgFeature = Counter()
         for x in range(chop, len(image) - chop):
@@ -68,6 +73,7 @@ def defineFeatures(imageList, chop):
                     imgFeature[(x, y)] = 1
 
         featureList.append(imgFeature)
+    progressBar.clear()
 
     return featureList, features
 
