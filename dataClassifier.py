@@ -46,7 +46,7 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
         perceptronClassifier.useTrainedWeights()
     else:
         print "Loading Testing Data....\n"
-        trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels)
+        trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels, tune)
 
         print "Training Perceptron....\n"
         perceptronClassifier.train(trainingData, trainingLabels, validationData, validationLabels, tune)
@@ -63,7 +63,7 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     print "Loading Training Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels, tune)
 
     print "Training Naive Bayes Classifier....\n"
     naiveBayesClassifier.train(trainingData, trainingLabels, validationData, validationLabels, features, tune)

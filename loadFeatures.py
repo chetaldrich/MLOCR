@@ -2,7 +2,7 @@ from mnist import *
 from util import Counter
 from progressBar import ProgressBar
 
-def loadTrainingData(n=None, chop=0):
+def loadTrainingData(n=None, pixels=0, tune=False):
     """
     loadTrainingData() pulls trainig data from MNIST training set, splits it into training and
     validation data, then parses the data into features
@@ -17,19 +17,25 @@ def loadTrainingData(n=None, chop=0):
 
     # find out where to split so that 5/6 of data is training
     # and 1/6 is validation
-    split = float(len(labels) * 5 / 6)
+    if tune:
+        split = float(len(labels) * 5 / 6)
+    # if we are not tuning, use all validation data
+    else:
+        split = len(labels)
 
     # split training and validation images/labels
     trainingImages, trainingLabels = images[:split], labels[:split]
     validationImages, validationLabels = images[split:], labels[split:]
 
+    print len(validationImages)
+
     # get features for data
-    trainingData, trainingFeatures = defineFeatures(trainingImages, chop)
-    validationData, validationFeatures = defineFeatures(validationImages, chop)
+    trainingData, trainingFeatures = defineFeatures(trainingImages, pixels)
+    validationData, validationFeatures = defineFeatures(validationImages, pixels)
 
     return trainingData, trainingLabels, validationData, validationLabels, trainingFeatures
 
-def loadTestingData(n=None, chop=0):
+def loadTestingData(n=None, chop=0, tune=False):
     """
     loadTestingData() pulls testing data from MNIST training set,
     then parses the data into features
