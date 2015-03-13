@@ -9,10 +9,13 @@ def readCommand():
     # default values
     numTestValues = 100
     numTrainValues = 100
+    pixels = 0
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-c", type = str, choices=["naivebayes", "perceptron"], help="selects the classifier for use with the MNIST data")
+
+    parser.add_argument("--pixels", type = int, choices=range(13), help="remove this many pixels from outside of photo for faster training")
 
     parser.add_argument("--train", type = int, help="selects the number of training data samples to be used by the classifier")
 
@@ -24,6 +27,8 @@ def readCommand():
         numTrainValues = args.train
     if args.test != None:
         numTestValues = args.test
+    if args.pixels != None:
+        pixels = args.pixels
 
 
     if args.c == "naivebayes":
@@ -35,13 +40,13 @@ def runPerceptron(numTrainValues, numTestValues):
     perceptronClassifier = perceptron.Perceptron(range(10), 3)
 
     print "Loading Testing Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels)
 
     print "Training Perceptron....\n"
     perceptronClassifier.train(trainingData, trainingLabels, validationData, validationLabels, False)
 
     print "Loading Testing Data....\n"
-    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues)
+    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)
 
     print "Testing Perceptron....\n"
     perceptronClassifier.test(testingData, testingLabels)
