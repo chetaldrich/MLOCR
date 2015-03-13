@@ -62,8 +62,8 @@ def defineFeatures(imageList, chop):
     for image in imageList:
         # create feature of on/off for (x, y) positions in image
         imgFeature = Counter()
-        for x in range(chop, len(image) + 1 - chop):
-            for y in range(chop, len(image[x]) + 1 - chop):
+        for x in range(chop, len(image) - chop):
+            for y in range(chop, len(image[x]) - chop):
                 features.append((x,y))
                 if image[x][y] == 0:
                     imgFeature[(x, y)] = 0

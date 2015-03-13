@@ -53,7 +53,7 @@ class NaiveBayes:
         countLabel = util.Counter() # in form k = label, v = numOfL
         countFeature = util.Counter()
         # We begin looking over the training data here.
-        progressBar = ProgressBar(20, len(trainingData), "Counting Data")
+        progressBar = ProgressBar(100, len(trainingData), "Counting Data")
         for i in range(len(trainingData)):
             # update our progress bar
             progressBar.update(i)
@@ -91,9 +91,12 @@ class NaiveBayes:
             for label in self.legalLabels:
                 probForK[k][label] = util.Counter()
                 # find probability of each feature given each label
-                for feature in self.features:
+                progressBar = ProgressBar(100, len(self.features), "Getting Probabilities for Features, Label {0}".format(label))
+                for index, feature in enumerate(self.features):
+                    progressBar.update(index)
                     if countFeature[label] != 0:
                         probForK[k][label][feature] = float(countFeature[label][feature] + k) / (countLabel[label] + k * len(self.legalLabels))
+                progressBar.clear()
 
             # set probabilities for features and classify validation data
             self.probFeature = probForK[k]
@@ -133,7 +136,7 @@ class NaiveBayes:
         self.posteriors = [] # Log posteriors are stored for later data analysis (autograder).
         counter = 0
         size = len(testData)
-        progressBar = ProgressBar(20, len(testData), "Classifying Data")
+        progressBar = ProgressBar(100, len(testData), "Classifying Data")
         for index, datum in enumerate(testData):
             progressBar.update(index)
             posterior = self.calculateLogJointProbabilities(datum)
