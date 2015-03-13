@@ -126,7 +126,6 @@ class NaiveBayes:
             posterior = self.calculateLogJointProbabilities(datum)
             guesses.append(posterior.argMax())
             self.posteriors.append(posterior)
-            counter += 1
         return guesses
 
     def calculateLogJointProbabilities(self, datum):
@@ -186,13 +185,13 @@ def main():
     naivebayes = NaiveBayes(range(10))
 
     print "Loading Training Data...."
-    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(500)
+    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(50)
 
     print "Training Naive Bayes Classifier...."
     naivebayes.train(trainingData, trainingLabels, validationData, validationLabels, features, False)
 
     print "Loading Testing Data...."
-    testingData, testingLabels = loadTestingData(500)
+    testingData, testingLabels = loadTestingData(50)
     print type(testingData)
 
     print "Testing Naive Bayes Classifier...."
