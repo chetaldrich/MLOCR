@@ -20,8 +20,6 @@ class Perceptron:
         """
         train() updates the perceptron prototype vectors over the training values given.
         """
-        # TODO: figure out what to pass in here
-        self.features = None
 
         if (tune):
             iterationValues = [1, 3, 5, 10, 15, 20]
@@ -128,22 +126,3 @@ class Perceptron:
         print "Percent of Correct Classifications"
         print "=================================="
         print float(countCorrect) / len(testingLabels) * 100.0
-
-
-def main():
-    perceptron = Perceptron(range(10), 3)
-
-    print "loading testing data"
-    trainingData, trainingLabels, validationData, validationLabels = loadTrainingData(600)
-
-    print "training perceptron"
-    perceptron.train(trainingData, trainingLabels, validationData, validationLabels, False)
-
-    print "loading testing data"
-    testingData, testingLabels = loadTestingData(100)
-
-    print "testing perceptron"
-    perceptron.test(testingData, testingLabels)
-
-if __name__=="__main__":
-    main()

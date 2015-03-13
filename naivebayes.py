@@ -140,12 +140,10 @@ class NaiveBayes:
                 # probability is the stored probability if the feature is on
                 # otherwise, it is 1 - that probability, because the distribution
                 # sums to 0
-                # if feature in datum:
-                probability = 1 - self.probFeature[label][feature]
-                if feature in datum:
-                    if datum[feature] != 0:
-                        probability = self.probFeature[label][feature]
-
+                if datum[feature] != 0:
+                    probability = self.probFeature[label][feature]
+                else:
+                    probability = 1 - self.probFeature[label][feature]
                 # if probability is 0, break to avoid log being undefined
                 # any probability in the joint being 0 will lead to an
                 # overall probability of 0
@@ -179,22 +177,3 @@ class NaiveBayes:
         print "Percent of Correct Classifications"
         print "=================================="
         print float(countCorrect) / len(testingLabels) * 100.0
-
-
-def main():
-    naivebayes = NaiveBayes(range(10))
-
-    print "Loading Training Data...."
-    trainingData, trainingLabels, validationData, validationLabels, features = loadTrainingData(50)
-
-    print "Training Naive Bayes Classifier...."
-    naivebayes.train(trainingData, trainingLabels, validationData, validationLabels, features, False)
-
-    print "Loading Testing Data...."
-    testingData, testingLabels = loadTestingData(50)
-
-    print "Testing Naive Bayes Classifier...."
-    naivebayes.test(testingData, testingLabels)
-
-if __name__=="__main__":
-    main()
