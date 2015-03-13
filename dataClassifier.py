@@ -2,6 +2,7 @@ import naivebayes
 import perceptron
 import loadFeatures
 import argparse
+import time
 
 
 def readCommand():
@@ -40,6 +41,7 @@ def readCommand():
         runPerceptron(numTrainValues, numTestValues, pixels, args.a, args.u)
 
 def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights):
+    t = time.clock()
     perceptronClassifier = perceptron.Perceptron(range(10), 3)
 
     if useTrainedWeights:
@@ -58,6 +60,8 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
     print "Testing Perceptron....\n"
     perceptronClassifier.test(testingData, testingLabels)
 
+    print "Total Time {0}".format(time.clock() - t)
+
 
 def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
@@ -73,6 +77,10 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
 
     print "Testing Naive Bayes Classifier....\n"
     naiveBayesClassifier.test(testingData, testingLabels)
+
+def test(classifiedData, testingLabels, ):
+    #
+    pass
 
 
 if __name__ == "__main__":

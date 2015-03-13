@@ -39,8 +39,6 @@ class Perceptron:
         else:
             self.trainingHelper(trainingData, trainingLabels, self.iterations)
 
-        self.printToFile()
-
     def trainingHelper(self, trainingData, trainingLabels, iterations):
         """
         trainingHelper finds the classification using the perceptron weights

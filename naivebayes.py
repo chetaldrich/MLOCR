@@ -67,8 +67,7 @@ class NaiveBayes:
             # Finally, we loop over the features for each datum and add each feature once
             # for each occurrence.
             for feature in trainingData[i]:
-                if trainingData[i][feature] != 0:
-                    countFeature[label][feature] += 1
+                countFeature[label][feature] += trainingData[i][feature]
         progressBar.clear()
 
         self.probLabel = copy.deepcopy(countLabel)
@@ -95,7 +94,7 @@ class NaiveBayes:
                 for index, feature in enumerate(self.features):
                     progressBar.update(index)
                     if countFeature[label] != 0:
-                        probForK[k][label][feature] = float(countFeature[label][feature] + k) / (countLabel[label] + k * len(self.legalLabels))
+                        probForK[k][label][feature] = float(countFeature[label][feature] + k) / (countLabel[label] + k * len(self.features))
                 progressBar.clear()
 
             # set probabilities for features and classify validation data
@@ -149,8 +148,8 @@ class NaiveBayes:
         """
         Returns the log-joint distribution over legal labels and the datum.
         """
-        # print datum
         logJoint = util.Counter()
+        t = time.clock()
         for label in self.legalLabels:
             logJoint[label] += math.log(self.probLabel[label])
             for feature in self.features:
@@ -170,6 +169,7 @@ class NaiveBayes:
                 # otherwise, sum up the logs to get values proportional
                 # to multiplying the probabilities
                 logJoint[label] += math.log(probability)
+        print "Time in log: ", time.clock() - t
         return logJoint
 
 

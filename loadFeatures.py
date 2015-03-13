@@ -27,8 +27,6 @@ def loadTrainingData(n=None, pixels=0, tune=False):
     trainingImages, trainingLabels = images[:split], labels[:split]
     validationImages, validationLabels = images[split:], labels[split:]
 
-    print len(validationImages)
-
     # get features for data
     trainingData, trainingFeatures = defineFeatures(trainingImages, pixels)
     validationData, validationFeatures = defineFeatures(validationImages, pixels)
