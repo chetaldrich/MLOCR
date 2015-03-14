@@ -149,7 +149,6 @@ class NaiveBayes:
         Returns the log-joint distribution over legal labels and the datum.
         """
         logJoint = util.Counter()
-        t = time.clock()
         for label in self.legalLabels:
             logJoint[label] += math.log(self.probLabel[label])
             for feature in self.features:
@@ -169,7 +168,6 @@ class NaiveBayes:
                 # otherwise, sum up the logs to get values proportional
                 # to multiplying the probabilities
                 logJoint[label] += math.log(probability)
-        print "Time in log: ", time.clock() - t
         return logJoint
 
 

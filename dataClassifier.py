@@ -64,6 +64,8 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
 
 
 def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
+
+    t = time.clock()
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     print "Loading Training Data....\n"
@@ -78,7 +80,9 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
     print "Testing Naive Bayes Classifier....\n"
     naiveBayesClassifier.test(testingData, testingLabels)
 
-def test(classifiedData, testingLabels, ):
+    print "Time taken {0}".format(time.clock() - t)
+
+def test(classifiedData, testingLabels):
     #
     pass
 
