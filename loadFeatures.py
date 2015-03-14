@@ -94,7 +94,7 @@ def defineFeatures(imageList, chop):
                     imgFeature[(x, y)] = 0
                 else:
                     imgFeature[(x, y)] = 1
-        imgFeature["emptySpace"] = hasEmptySpace(image)
+        imgFeature["emptySpace"] = int(hasEmptySpace(image))
 
         featureList.append(imgFeature)
 
@@ -118,8 +118,6 @@ def hasEmptySpace(image):
                 if isEmptySpace(image, x, y):
                     printImage(image)
                     return True
-
-    printImage(image)
     return False
 
 def isEmptySpace(image, x, y):
