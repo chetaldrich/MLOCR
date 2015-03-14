@@ -94,6 +94,7 @@ def defineFeatures(imageList, chop):
                     imgFeature[(x, y)] = 0
                 else:
                     imgFeature[(x, y)] = 1
+        imgFeature["emptySpace"] = hasEmptySpace(image)
 
         featureList.append(imgFeature)
 
@@ -104,13 +105,73 @@ def defineFeatures(imageList, chop):
         for x in range(chop, len(image) - chop):
             for y in range(chop, len(image[x]) - chop):
                 features.append((x,y))
+    features.append("emptySpace")
 
 
     return featureList, features
 
+def hasEmptySpace(image):
+    hasEmptySpace = False
+    for x in range(len(image)):
+        for y in range(len(image)):
+            if image[x][y] == 0:
+                if isEmptySpace(image, x, y):
+                    printImage(image)
+                    return True
+
+    printImage(image)
+    return False
+
+def isEmptySpace(image, x, y):
+    canBeEmpty = False
+
+    # check if there is a 1 above x
+    for i in range(0, x):
+        if image[i][y] != 0:
+            canBeEmpty = True
+            break
+    if not canBeEmpty:
+        return False
+    canBeEmpty = False
+
+    # check if there is a 1 below x
+    for i in range(x, len(image)):
+        if image[i][y] != 0:
+            canBeEmpty = True
+            break
+    if not canBeEmpty:
+        return False
+    canBeEmpty = False
+
+    # check if there is a 1 to the left of y
+    for i in range(0, y):
+        if image[x][i] != 0:
+            canBeEmpty = True
+            break
+    if not canBeEmpty:
+        return False
+    canBeEmpty = False
+
+    # check if there is a 1 to the right of y
+    for i in range(y, len(image[0])):
+        if image[x][i] != 0:
+            canBeEmpty = True
+            break
+
+    return canBeEmpty
+
+def printImage(image):
+    for i in range(len(image)):
+        for j in range(len(image[i])):
+            if image[i][j] == 0:
+                print 0,
+            else:
+                print " ",
+        print
+
 
 def main():
-    loadData()
+    loadTrainingData(n=1)
 
 
 if __name__=="__main__":
