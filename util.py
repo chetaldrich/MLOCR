@@ -221,6 +221,13 @@ def vectorize(index):
     vector[index] = 1.0
     return vector
 
+def sigmoid(z):
+    return 1 / (1.0 + numpy.exp(-z))
+
+def sigmoid_prime(z):
+    sigmoidfn = sigmoid(z)
+    return sigmoidfn * (1 - sigmoidfn)
+
 def sign( x ):
   """
   Returns 1 or -1 depending on the sign of x
