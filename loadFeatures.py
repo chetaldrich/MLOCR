@@ -1,10 +1,10 @@
 from mnist import *
-from util import Counter
+from util import *
 from progressBar import ProgressBar
 
 def loadTrainingData(n=None, pixels=0, tune=False):
     """
-    loadTrainingData() pulls trainig data from MNIST training set, splits it into training and
+    loadTrainingData() pulls training data from MNIST training set, splits it into training and
     validation data, then parses the data into features
     """
     # load data from MNIST files
@@ -32,6 +32,26 @@ def loadTrainingData(n=None, pixels=0, tune=False):
     validationData, validationFeatures = defineFeatures(validationImages, pixels)
 
     return trainingData, trainingLabels, validationData, validationLabels, trainingFeatures
+
+def buildNeuralNetVectors(trainingImages, trainingLabels, validiationImages, validationLabels, testImages, testLabels):
+    """
+    buildNeuralNetVectors() builds the vectors required for the gradient descent and backpropagation learning algorithms for the neural network.
+    """
+
+    # build the training data by vectorizing images and labels from the dataset
+    trainingInputs = [numpy.reshape(trainingImage, (784, 1)) for trainingImage in trainingImages]
+    trainingLabelOutputs = [vectorize(label) for label in trainingLabels]
+    trainingData = zip(trainingInputs, trainingLabelOutputs)
+
+    # build the validation data by vectorizing images from the dataset
+    validationInputs = [numpy.reshape(validationImage, (784, 1)) for validationImage in validationImages]
+    validationData = zip(validationInputs, validationLabels)
+
+    # build the testing data by vectorizing images from the test set
+    testInputs = [numpy.reshape(testImage, (784, 1)) for testImage in testImages]
+    testData = zip(testInputs, testLabels)
+
+
 
 def loadTestingData(n=None, chop=0, tune=False):
     """
