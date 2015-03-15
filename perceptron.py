@@ -124,25 +124,3 @@ class Perceptron:
             guesses.append(values.argMax())
         progressBar.clear()
         return guesses
-
-    def test(self, testingData, testingLabels):
-        """
-        test() gets a classification for the training data points and checks
-        if it matches the labels
-        """
-        # get classification of data
-        classified = self.classify(testingData)
-
-        countCorrect = 0
-        # check if classification matches label
-        for i in range(len(testingLabels)):
-            if testingLabels[i] == classified[i]:
-                countCorrect += 1
-
-        print "Number of Correct Classifications"
-        print "================================="
-        print countCorrect
-
-        print "Percent of Correct Classifications"
-        print "=================================="
-        print float(countCorrect) / len(testingLabels) * 100.0

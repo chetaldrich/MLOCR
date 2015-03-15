@@ -58,12 +58,15 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
     testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)
 
     print "Testing Perceptron....\n"
-    perceptronClassifier.test(testingData, testingLabels)
+    classifiedData = perceptronClassifier.classify(testingData)
+    test(classifiedData, testingLabels)
 
     print "Total Time {0}".format(time.clock() - t)
 
 
 def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
+
+    t = time.clock()
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     print "Loading Training Data....\n"
@@ -76,11 +79,30 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
     testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)
 
     print "Testing Naive Bayes Classifier....\n"
-    naiveBayesClassifier.test(testingData, testingLabels)
+    classifiedData = naiveBayesClassifier.classify(testingData)
+    test(classifiedData, testingLabels)
 
-def test(classifiedData, testingLabels, ):
-    #
-    pass
+    print "Total Time {0}".format(time.clock() - t)
+
+def test(classifiedData, testingLabels):
+    """
+    test() gets a classification for the training data points and checks
+    if it matches the labels
+    """
+    countCorrect = 0
+    # check if classification matches label
+    for i in range(len(testingLabels)):
+        if testingLabels[i] == classifiedData[i]:
+            countCorrect += 1
+
+    print "Number of Correct Classifications"
+    print "================================="
+    print countCorrect
+
+    print "Percent of Correct Classifications"
+    print "=================================="
+    print float(countCorrect) / len(testingLabels) * 100.0
+
 
 
 if __name__ == "__main__":
