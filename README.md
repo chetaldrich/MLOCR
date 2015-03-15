@@ -2,12 +2,14 @@
 
 ### Optical Character Recognition of digits using machine learning.
 
-We will be using the MNIST database of handwritten digits to make use of machine learning algorithms.
+The program in this repository uses the MNIST database of handwritten digits and attempts to classify them using machine learning algorithms.
 
-We currently have implementations of the following machine learning techniques.
+We currently have implementations of the following machine learning techniques:
 
 * Single Perceptron
 * Naive Bayes
+
+#### Dependencies
 
 In order to run the program, you'll need the [MNIST data](http://yann.lecun.com/exdb/mnist/), which you should place in a directory called `mnist`.
 
@@ -15,6 +17,12 @@ There is a script to perform this included with the repository, which can be run
 
 * `$ chmod +x loadMNISTData.sh`
 * `$ ./loadMNISTData.sh`
+
+Additionally, you'll need NumPy. If you don't have this Python package already, you can get it with pip, the installation instructions for which can be found [here](https://pip.pypa.io/en/latest/installing.html). After installing pip, you can get NumPy with the following command:
+
+`$ sudo pip install numpy`
+
+#### Usage
 
 The following commands should allow you to try each of the classification techniques we have implemented (We recommend having a maximizing the size of your terminal window for the best experience with the progress bars):
 
