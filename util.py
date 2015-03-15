@@ -1,5 +1,6 @@
 import inspect
 import sys
+import numpy
 
 
 class Counter(dict):
@@ -215,7 +216,10 @@ class Counter(dict):
             addend[key] = -1 * y[key]
         return addend
 
-
+def vectorize(index):
+    vector = numpy.zeros((10, 1))
+    vector[index] = 1.0
+    return vector
 
 def sign( x ):
   """
