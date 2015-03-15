@@ -10,7 +10,12 @@ We currently have implementations of the following machine learning techniques.
 
 In order to run the program, you'll need the [MNIST data](http://yann.lecun.com/exdb/mnist/), which you should place in a directory called `mnist`.
 
-The following commands should allow you to try each of the classification techniques we have implemented: 
+There is a script to perform this included with the repository, which can be run as follows:
+
+* `$ chmod +x loadMNISTData.sh`
+* `$ ./loadMNISTData.sh`
+
+The following commands should allow you to try each of the classification techniques we have implemented:
 
 * Single Perceptron
   `python dataClassifier.py -c perceptron`
