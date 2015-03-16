@@ -24,7 +24,7 @@ Additionally, you'll need NumPy. If you don't have this Python package already, 
 
 #### Usage
 
-The following commands should allow you to try each of the classification techniques we have implemented (We recommend having a maximizing the size of your terminal window for the best experience with the progress bars):
+The following commands should allow you to try each of the classification techniques we have implemented (We recommend maximizing the size of your terminal window for the best experience with the progress bars):
 
 * Single Perceptron
   `$ python dataClassifier.py -c perceptron`
@@ -52,3 +52,5 @@ All parameters that are available for use:
 * `--train` selects the number of training data samples to be used by the classifier
 
 * `--test` selects the number of test data samples to be used by the classifier
+
+* `-i` shows the most frequent incorrect classifications

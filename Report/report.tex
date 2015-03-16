@@ -100,8 +100,9 @@
     Additionally, it became clear during our testing that tuning made classifications of the test data much more accurate given smaller training sets.
 
     In our case, this seems straightforward. Given less data, accounting for the lack of examples by doing more training or accounting for possibilities that weren't in the training data was helpful for accuracy. However, we noticed that the effects of tuning leveled off considerably as more test examples were included, to the point where it had virtually no effect at all when using 60000 training examples.
-    
+
     Finally, we looked at common mistakes made by our classifiers. Naives Bayes and Perceptron both commonly mistook 4s for 9s, which could have possibly been prevented by a more rigorous feature for enclosed spaces. It was also interesting that for both classifiers, it was common to make a mistake, for example, classifying an 8 as a 1, but not a 1 as an 8.
+\newpage
      \subsection*{Conclusion}
      In the end, we were able to reach an 89.49\% maximum recognition on the test set with a perceptron. This is a relatively high recognition on a fairly complex dataset, which we were surprised to find, especially considering fairly myopic features. However, there is considerable room for improvement.
 
