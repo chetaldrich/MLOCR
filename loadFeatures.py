@@ -66,15 +66,6 @@ def loadTestingData(n=None, chop=0, tune=False):
     # get features for data
     testingData = defineFeatures(images, chop)[0]
 
-    dict = {}
-    for label in labels:
-        if label in dict:
-            dict[label] += 1
-        else:
-            dict[label] = 1
-
-    print "labels in testing data: ", dict
-
     return testingData, labels
 
 

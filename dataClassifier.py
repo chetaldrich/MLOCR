@@ -9,6 +9,8 @@ import perceptron
 import loadFeatures
 import argparse
 import time
+import operator
+from util import Counter
 
 
 def readCommand():
@@ -39,6 +41,9 @@ def readCommand():
 
     # `--test` selects the number of test data samples to be used by the classifier
     parser.add_argument("--test", type = int,  help="selects the number of testing data samples to be used by the classifier")
+    
+    # '-i' gives information about most frequent incorrect classifications
+    parser.add_argument("-i", action="store_true", default=False, help="gives information about most frequent incorrect classifications")
 
     args = parser.parse_args()
 
@@ -53,11 +58,11 @@ def readCommand():
     # Here, we determine which algorithm to run based on input on
     # the -c parameter.
     if args.c == "naivebayes":
-        runNaiveBayes(numTrainValues, numTestValues, pixels, args.a, args.u)
+        runNaiveBayes(numTrainValues, numTestValues, pixels, args.a, args.u, args.i)
     elif args.c == "perceptron":
-        runPerceptron(numTrainValues, numTestValues, pixels, args.a, args.u)
+        runPerceptron(numTrainValues, numTestValues, pixels, args.a, args.u, args.i)
 
-def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights):
+def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights, info):
     """
     runPerceptron() runs the perceptron learning algorithm on the MNIST dataset.
     It also prints associated analytics, including the accuracy and time taken
@@ -69,6 +74,7 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
     pixels -- number of pixels to chop from the margins of the image
     tune -- a boolean for whether to tune to find the optimal number of iterations
     useTrainedWeights -- boolean to use pretrained weights
+    info -- boolean to get information about common classification mistakes
     """
     t = time.clock()
     perceptronClassifier = perceptron.Perceptron(range(10), 3)
@@ -88,12 +94,12 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
 
     print "Testing Perceptron....\n"
     classifiedData = perceptronClassifier.classify(testingData)
-    test(classifiedData, testingLabels)
+    test(classifiedData, testingLabels, info)
 
     print "Total Time {0}".format(time.clock() - t)
 
 
-def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs):
+def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs, info):
     """
     runNaiveBayes() runs the Naive Bayes learning algorithm on the MNIST dataset.
     It also prints associated analytics, including the accuracy and time taken
@@ -104,6 +110,7 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs):
     numTestValues -- number of test values to test the trained perceptron
     pixels -- number of pixels to chop from the margins of the image
     tune -- a boolean for whether to tune to find the optimal number of iterations
+    info -- boolean to get information about common classification mistakes
     """
     t = time.clock()
     
@@ -123,11 +130,11 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs):
 
     print "Testing Naive Bayes Classifier....\n"
     classifiedData = naiveBayesClassifier.classify(testingData)
-    test(classifiedData, testingLabels)
+    test(classifiedData, testingLabels, info)
 
     print "Total Time {0}".format(time.clock() - t)
 
-def test(classifiedData, testingLabels):
+def test(classifiedData, testingLabels, info):
     """
     test() gets a classification for the test data and checks
     if it matches the labels. It then returns a performance metric
@@ -136,12 +143,16 @@ def test(classifiedData, testingLabels):
     Keyword Arguments:
     classifiedData -- the labels outputted by the trained algorithm on the test set
     testingLabels -- the correct labels associated with test set
+    info -- boolean to get information about common classification mistakes
     """
     countCorrect = 0
+    problems = Counter()
     # check if classification matches label
     for i in range(len(testingLabels)):
         if testingLabels[i] == classifiedData[i]:
             countCorrect += 1
+        else:
+            problems[(testingLabels[i], classifiedData[i])] += 1
 
     print "Number of Correct Classifications"
     print "================================="
@@ -150,6 +161,30 @@ def test(classifiedData, testingLabels):
     print "Percent of Correct Classifications"
     print "=================================="
     print float(countCorrect) / len(testingLabels) * 100.0
+                     
+    if info:
+        
+        getInfo(problems)
+                     
+def getInfo(problems):
+    """
+    getInfo() prints out, in order, all incorrect classifications
+    """
+    
+    print "Common Problems with Classification"
+    print "==================================="
+    
+    # sort by number of problems of each type, in decreasing order
+    sorted_problems = sorted(problems.items(), key=operator.itemgetter(1))
+    sorted_problems.reverse()
+    
+    # print out the top 10 issues
+    counter = 0
+    for problem in sorted_problems:
+        if counter > 10:
+            break
+        print "Label  {0}    Classified as  {1}    Occurrences  {2}".format(problem[0][0], problem[0][1], problem[1])
+        counter += 1
 
 
 
