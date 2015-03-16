@@ -15,4 +15,10 @@ curl http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz > mnist/train-l
 curl http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz > mnist/t10k-images-idx3-ubyte.gz
 curl http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz > mnist/t10k-labels-idx1-ubyte.gz
 
+# unzip files
+gunzip mnist/train-images-idx3-ubyte.gz
+gunzip mnist/train-labels-idx1-ubyte.gz
+gunzip mnist/t10k-images-idx3-ubyte.gz
+gunzip mnist/t10k-labels-idx1-ubyte.gz
+
 echo "MNIST data loaded"
