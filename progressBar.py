@@ -12,7 +12,12 @@ class ProgressBar:
     """
     def __init__(self, width, loopLength, label=""):
         """
-        Give progres bar a width, length of loop (to determine progress) and optional label
+        Initialization of the Progress Bar.
+
+        Keyword Arguments:
+        width -- designates the width of the progress bar in characters
+        loopLength -- designates the number of iterations in the loop
+        label -- designates a label for the progress bar
         """
         self.barWidth = width
         self.loopLength = loopLength
@@ -24,7 +29,11 @@ class ProgressBar:
 
     def update(self, iteration):
         """
-        updates the progress bar based on current index in the loop
+        update() Updates the progress bar based on current index in the loop.
+
+        Keyword Arguments:
+        iteration -- give the iteration value, which will update the progress bar
+                     when higher than the current value.
         """
         # check if we are at a new point that can be handled by a bar
         # of current size
@@ -47,7 +56,10 @@ class ProgressBar:
 
     def shouldUpdate(self, iteration):
         """
-        determines whether or not we need to update a progress bar based on the iteration
+        shouldUpdate() determines when the bar should update.
+
+        Keyword Arguments:
+        iteration -- the current iteration of the loop
         """
         # if the bar is longer than the loop, always true!
         if self.barWidth > self.loopLength:
@@ -59,13 +71,16 @@ class ProgressBar:
 
     def changeLabel(self, newLabel):
         """
-        updates the label on a progress bar
+        changeLabel() updates the label on a progress bar.
+
+        Keyword Arguments:
+        newLabel -- the new label
         """
         self.label = newLabel
 
     def clear(self):
         """
-        provides a 'clean slate' after loop is finished
+        clear() eliminates the progess bar upon completion of a loop. 
         """
         # overwrite all of the content on previously written line with spaces
         sys.stdout.write("\r")
