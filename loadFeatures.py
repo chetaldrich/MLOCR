@@ -116,6 +116,17 @@ def defineFeatures(imageList, chop):
 
     return featureList, features
 
+def getFeatureList():
+    """
+    getFeatureList() returns the list of features necessary for the naive bayes
+    classifier with pre-trained probabilities
+    """
+    features = []
+    for x in range(28):
+        for y in range(28):
+            features.append((x,y))
+            
+    return features
 
 def main():
     loadData()

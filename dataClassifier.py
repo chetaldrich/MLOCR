@@ -29,7 +29,7 @@ def readCommand():
     parser.add_argument("-a", action="store_true", default=False, help="tune while training")
 
     # `-u` Use pre-learned weights for the perceptron. These were created after training the program for about 3 hours on all of the training data, and this option is available so you can see the results of the classifier without having to wait for the perceptron to train.
-    parser.add_argument("-u", action="store_true", default=False, help="use pre-learned weights for perceptron")
+    parser.add_argument("-u", action="store_true", default=False, help="use pre-learned weights for perceptron or pre-learned probabilities for Naive Bayes")
 
     # `--pixels` Chops off some pixels from the edges of each image to improve processing time. Sometimes leads to a slight loss in accuracy. Options are 1-12 pixels.
     parser.add_argument("--pixels", type = int, choices=range(13), help="remove this many pixels from outside of photo for faster training")
@@ -53,7 +53,7 @@ def readCommand():
     # Here, we determine which algorithm to run based on input on
     # the -c parameter.
     if args.c == "naivebayes":
-        runNaiveBayes(numTrainValues, numTestValues, pixels, args.a)
+        runNaiveBayes(numTrainValues, numTestValues, pixels, args.a, args.u)
     elif args.c == "perceptron":
         runPerceptron(numTrainValues, numTestValues, pixels, args.a, args.u)
 
@@ -93,7 +93,7 @@ def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights
     print "Total Time {0}".format(time.clock() - t)
 
 
-def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
+def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs):
     """
     runNaiveBayes() runs the Naive Bayes learning algorithm on the MNIST dataset.
     It also prints associated analytics, including the accuracy and time taken
@@ -106,13 +106,17 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune):
     tune -- a boolean for whether to tune to find the optimal number of iterations
     """
     t = time.clock()
+    
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
-    print "Loading Training Data....\n"
-    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels, tune)
+    if useTrainedProbs:
+        naiveBayesClassifier.useTrainedProbs(loadFeatures.getFeatureList())
+    else:
+        print "Loading Training Data....\n"
+        trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels, tune)
 
-    print "Training Naive Bayes Classifier....\n"
-    naiveBayesClassifier.train(trainingData, trainingLabels, validationData, validationLabels, features, tune)
+        print "Training Naive Bayes Classifier....\n"
+        naiveBayesClassifier.train(trainingData, trainingLabels, validationData, validationLabels, features, tune)
 
     print "Loading Testing Data....\n"
     testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)

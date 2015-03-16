@@ -6,6 +6,7 @@
 # Chet Aldrich, Laura Biester
 
 from loadFeatures import *
+from naiveBayesProbs import getSavedProbs
 from progressBar import ProgressBar
 import util
 import math
@@ -29,7 +30,25 @@ class NaiveBayes:
         self.probLabel = util.Counter()
         self.probFeature = util.Counter()
         self.features = None
+        
+    def printToFile(self):
+        """
+        printToFile() prints trained probabilities to a separate file. Simply place this method after the training sequence if you want to save the values for later use.
+        """
+        file = open("naiveBayesProbs.py", "w+")
+        print >>file, "def getSavedProbs():\n\treturn {0}, {1}".format(self.probLabel, self.probFeature)
+        file.close()
 
+    def useTrainedProbs(self, features):
+        """
+        useTrainedProbs() gets a dictionary of previously trained probabilities from
+        the naiveBayesProbs.py file.
+        
+        Keyword Arguments:
+        featurs -- features needed for the saved data
+        """
+        self.probLabel, self.probFeature = getSavedProbs()
+        self.features = features
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, allFeatures, tune):
         """
@@ -144,7 +163,7 @@ class NaiveBayes:
 
         # print final choice for k
         print "K chosen = {0}".format(self.k)
-
+        
         return self.k
 
     def classify(self, testData):
