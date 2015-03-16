@@ -18,7 +18,7 @@
 \newtheorem*{remark}{Remark}
 
     \pagestyle{fancy}
-    \fancyhead[L]{Proposal: MLOCR}
+    \fancyhead[L]{Report: MLOCR}
     \fancyhead[R]{Chet Aldrich and Laura Biester}
     \begin{document}
 	 \section*{MLOCR}
@@ -37,22 +37,22 @@
      \begin{table}[h!]
         \centering
         \begin{tabular}{l|l|l}
-        Training Quantity & Naive Bayes (with tuning) & Perceptron (with tuning)  \\ \hline
-        100               & 75.13\% (253.24 seconds)  & 66.45\% (90.84 seconds)   \\
-        500               & 81.57\% (366.62 seconds)  & 80.49\% (141.57 seconds)  \\
-        1000              & 82.23\% (354.90 seconds)  & 81.66\% (203.01 seconds)  \\
-        5000              & 84.0\% (266.61 seconds)   & 84.10\% (1076.12 seconds) \\
-        10000             & 84.37\% (394.7 seconds)   & 84.64\% (2023.99 seconds) \\
-        20000             & 84.38\% (436.25 seconds)  & \% ( seconds)             \\
-        30000             & 84.23\% (497.27 seconds)  & \% ( seconds)             \\
-        40000             & 84.25\% (552.68 seconds)  & \% ( seconds)             \\
-        50000             & 84.29\% (604.87 seconds)  & \% ( seconds)             \\
-        60000             & 84.31\% (632.77 seconds)  & \% ( seconds)             \\
+        Training Quantity & Naive Bayes (with tuning) & Perceptron (with tuning)   \\ \hline
+        100               & 75.13\% (253.24 seconds)  & 66.45\% (90.84 seconds)    \\
+        500               & 81.57\% (366.62 seconds)  & 80.49\% (141.57 seconds)   \\
+        1000              & 82.23\% (354.90 seconds)  & 81.66\% (203.01 seconds)   \\
+        5000              & 84.0\% (266.61 seconds)   & 84.10\% (1076.12 seconds)  \\
+        10000             & 84.37\% (394.7 seconds)   & 84.64\% (2023.99 seconds)  \\
+        20000             & 84.38\% (436.25 seconds)  & 85.44\% (4128.00 seconds)  \\
+        30000             & 84.23\% (497.27 seconds)  & 88.62\% (5895.58 seconds)  \\
+        40000             & 84.25\% (552.68 seconds)  & 88.26\% (7768.09 seconds)  \\
+        50000             & 84.29\% (604.87 seconds)  & 89.14\% (10020.12 seconds) \\
+        60000             & 84.31\% (632.77 seconds)  & 89.49\% (11683.14 seconds) \\
         \end{tabular}
      \end{table}
      We tried a significant number of different training quantities in order to see what was optimal given the training set and time. In terms of total percentage correct, the perceptron led with a slight edge over Naive Bayes with many training examples. However, you'll notice that the Naive Bayes algorithm was much more time efficient to reach a similar level of accuracy. A telling example of this phenomenon are the results with 5000 training instances. Both classifiers reach a similar level of accuracy, but the perceptron took nearly 5 times as much time to reach that level of accuracy. In fact, you can see this problem magnifies with larger amounts of training data.
 
-     In the test setting, it was clear that Naive Bayes was much faster given large datasets. However, in many cases we would be allowed to train the classifier prior to using it on data, and this is where the perceptron shines. The classification of test data is very quick with the perceptron, and if we use pretrained values, we can have a more accurate classifier without much of a sacrifice in time other than the initial training time. In this case Naive Bayes loses its edge. 
+     In the test setting, it was clear that Naive Bayes was much faster given large datasets. However, in many cases we would be allowed to train the classifier prior to using it on data, and this is where the perceptron shines. The classification of test data is very quick with the perceptron, and if we use pretrained values, we can have a more accurate classifier without much of a sacrifice in time other than the initial training time. In this case Naive Bayes loses its edge.
      \subsection*{Conclusion}
 
 
