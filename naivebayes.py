@@ -17,25 +17,33 @@ class NaiveBayes:
     A Naive Bayes classifier.
     """
     def __init__(self, legalLabels):
+        """
+        Initializes the information required for Naive Bayes.
+
+        Keyword Arguments:
+        legalLabels -- the possible labels in the dataset
+        """
         self.legalLabels = legalLabels
-        self.type = "naivebayes"
         self.k = 1 # this is the smoothing parameter
         self.automaticTuning = False # Flat for automatic tuning of the parameters
         self.probLabel = util.Counter()
         self.probFeature = util.Counter()
         self.features = None
 
-    def setSmoothing(self, k):
-        """
-        This is used by the main method to change the smoothing parameter before training.
-        """
-        self.k = k
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, allFeatures, tune):
         """
-        Outside shell to call the method.
+        train() acts as an outside shell to call the method.
+
+        Keyword Arguments:
+        trainingData -- training data for the perceptron
+        trainingLabels -- labels for the associated training data
+        validationData -- validation data for the perceptron tuning function
+        validationLabels -- labels for the associated validation data
+        allFeatures -- a list of all of the possible features in the dataset
+        tune -- a boolean indicating whether to tune over iterations.
         """
-        self.features = allFeatures # dictionary with all valid features
+        self.features = allFeatures # list with all valid features
         self.automaticTuning = tune
 
 
@@ -48,11 +56,16 @@ class NaiveBayes:
 
     def trainAndTune(self, trainingData, trainingLabels, validationData, validationLabels, kgrid):
         """
-        Train the classifier by collecting counts over the training data
-        and choose the smoothing parameter among the choices in kgrid by
+        trainAndTune() trains the classifier by collecting counts over the training data and choosing the smoothing parameter among the choices in kgrid by
         using the validation data. This method should store the right parameters
         as a side-effect and should return the best smoothing parameters.
 
+        Keyword Arguments:
+        trainingData -- training data for the perceptron
+        trainingLabels -- labels for the associated training data
+        validationData -- validation data for the perceptron tuning function
+        validationLabels -- labels for the associated validation data
+        kgrid -- a list of possible k values to try for smoothing
         """
 
         # We begin by creating the prior probabilities for each of the labels
@@ -136,10 +149,13 @@ class NaiveBayes:
 
     def classify(self, testData):
         """
-        Classify the data based on the posterior distribution over labels.
+        classify() classifies each data item in the input by finding the best prototype vector.
+
+        Keyword Arguments:
+        testData -- the test data to classify
         """
         guesses = []
-        self.posteriors = [] # Log posteriors are stored for later data analysis (autograder).
+        self.posteriors = [] # Log posteriors are stored for later data analysis.
         counter = 0
         size = len(testData)
         progressBar = ProgressBar(100, len(testData), "Classifying Data")
@@ -153,7 +169,12 @@ class NaiveBayes:
 
     def calculateLogJointProbabilities(self, datum):
         """
-        Returns the log-joint distribution over legal labels and the datum.
+        calculateLogJointProbabilities() returns the log-joint distribution over
+        legal labels and the datum.
+
+        Keyword Arguments:
+        datum -- a dictionary with 0 or 1 values depending on whether a value is
+                 colored or not. 
         """
         logJoint = util.Counter()
         for label in self.legalLabels:

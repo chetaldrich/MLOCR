@@ -2,7 +2,7 @@
 # -----------------
 # Main file for parsing data from the MNIST dataset, and passing it onto the
 # machine learning algorithms.
-# 
+#
 # Chet Aldrich, Laura Biester
 
 from mnist import *
@@ -96,7 +96,6 @@ def defineFeatures(imageList, chop):
         imgFeature = Counter()
         for x in range(chop, len(image) - chop):
             for y in range(chop, len(image[x]) - chop):
-                # features.append((x,y))
                 if image[x][y] == 0:
                     imgFeature[(x, y)] = 0
                 else:
@@ -106,6 +105,8 @@ def defineFeatures(imageList, chop):
 
     progressBar.clear()
 
+    # Here, we create a list of all of the features for use in the
+    # perceptron and Naive Bayes classifiers. 
     if len(imageList) > 0:
         image = imageList[0]
         for x in range(chop, len(image) - chop):
