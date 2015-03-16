@@ -14,7 +14,7 @@ import time
 
 class NaiveBayes:
     """
-    Set the project to use a Naive Bayes classifier.
+    A Naive Bayes classifier.
     """
     def __init__(self, legalLabels):
         self.legalLabels = legalLabels

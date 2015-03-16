@@ -14,31 +14,54 @@ from progressBar import ProgressBar
 
 
 class Perceptron:
-
+    """
+    A Perceptron Classifier.
+    """
     def __init__(self, legalLabels, iterations):
+        """
+        Initializes the information required for the perceptron.
+
+        Keyword Arguments:
+        legalLabels -- the possible labels in the dataset
+        iterations -- the desired iteration value during training
+        """
         self.legalLabels = legalLabels
         self.iterations = iterations
         self.initWeights()
 
     def printToFile(self):
+        """
+        printToFile() prints trained weights to a separate file. Simply place this method after the training sequence if you want to save the values for later use.
+        """
         file = open("perceptronWeights.py", "w+")
         print >>file, "def getSavedWeights():\n\treturn {0}".format(self.weights)
         file.close()
 
     def initWeights(self):
+        """
+        initWeights() initializes the weight dictionary with Counters (see util.py).
+        """
         self.weights = {}
         for label in self.legalLabels:
             self.weights[label] = util.Counter()
 
     def useTrainedWeights(self):
         """
-        gets dictionary of previously trained weights from file
+        useTrainedWeights() gets a dictionary of previously trained weights from
+        the perceptronWeights.py file.
         """
         self.weights = perceptronWeights.getSavedWeights()
 
     def train(self, trainingData, trainingLabels, validationData, validationLabels, tune):
         """
         train() updates the perceptron prototype vectors over the training values given.
+
+        Keyword Arguments:
+        trainingData -- training data for the perceptron
+        trainingLabels -- labels for the associated training data
+        validationData -- validation data for the perceptron tuning function
+        validationLabels -- labels for the associated validation data
+        tune -- a boolean indicating whether to tune over iterations.
         """
 
         if (tune):
@@ -49,8 +72,13 @@ class Perceptron:
 
     def trainingHelper(self, trainingData, trainingLabels, iterations):
         """
-        trainingHelper finds the classification using the perceptron weights
-        and updates weights if needed
+        trainingHelper() classifies training data using the perceptron weights
+        and updates the perceptron weights if the perceptron is incorrect.
+
+        Keyword Arguments:
+        trainingData -- training data for the perceptron
+        trainingLabels -- labels for the associated training data
+        iterations -- desired number of iterations over the training dataset.
         """
         for i in range(iterations):
             progressBar = ProgressBar(100, len(trainingData), "Learning Weights, Iteration {0} of {1}"
@@ -78,6 +106,12 @@ class Perceptron:
         """
         tune() tunes the data to the best number of iterations over the validation data.
 
+        Keyword Arguments:
+        trainingData -- training data for the perceptron
+        trainingLabels -- labels for the associated training data
+        validationData -- validation data for the perceptron tuning function
+        validationLabels -- labels for the associated validation data
+        iterationValues -- a list of different numbers of iterations to try
         """
         tuningWeights = Counter()
         correctlyClassified = Counter()
@@ -113,6 +147,8 @@ class Perceptron:
         """
         classify() classifies each data item in the input by finding the best prototype vector.
 
+        Keyword Arguments:
+        data -- the test data to classify
         """
         guesses = []
         progressBar = ProgressBar(100, len(data), "Classifying Data")

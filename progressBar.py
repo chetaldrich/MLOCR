@@ -8,7 +8,7 @@ import sys
 
 class ProgressBar:
     """
-    A Class to create progress bars to show in the terminal during loops
+    A Class to create progress bars to show in the terminal during loops.
     """
     def __init__(self, width, loopLength, label=""):
         """
@@ -80,7 +80,7 @@ class ProgressBar:
 
     def clear(self):
         """
-        clear() eliminates the progess bar upon completion of a loop. 
+        clear() eliminates the progess bar upon completion of a loop.
         """
         # overwrite all of the content on previously written line with spaces
         sys.stdout.write("\r")
