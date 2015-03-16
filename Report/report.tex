@@ -58,6 +58,14 @@
         60000             & 84.31\% (632.77 seconds)  & 89.49\% (11683.14 seconds) \\
         \end{tabular}
      \end{table}
+     
+     \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../graphs/pvsnb.png}
+    \caption{Comparing Perceptron and Naive Bayes}
+    \label{fig:awesome_image}
+    \end{figure}
+     
      We tried a significant number of different training quantities in order to see what was optimal given the training set and time. In terms of total percentage correct, the perceptron led with a slight edge over Naive Bayes with many training examples. However, you'll notice that the Naive Bayes algorithm was much more time efficient to reach a similar level of accuracy. A telling example of this phenomenon are the results with 5000 training instances. Both classifiers reach a similar level of accuracy, but the perceptron took nearly 5 times as long to reach that level of accuracy. In fact, you can see this problem magnifies with larger amounts of training data.
 
      In the test setting, it was clear that Naive Bayes was much faster given large datasets. However, in many cases we would be allowed to train the classifier prior to using it on data, and this is where the perceptron shines. The classification of test data is very quick with the perceptron, and if we use pretrained values, we can have a more accurate classifier without much of a sacrifice in time other than the initial training time. Running perceptron with pre trained weights only took 26.13 seconds. In this case Naive Bayes loses its edge, taking 191.76 seconds.
@@ -74,15 +82,22 @@
      \end{table}
      \begin{table}[h!]
      	\centering
-	\begin{tabular}{l|l|l}
-     	Training Quantity & Perceptron (without tuning) & Perceptron (with tuning)  \\ \hline
-    	100               & 60.5\% (107.21 seconds)     & 66.45\% (90.84 seconds)    \\
-   	 500               & 80.6\% (120.18 seconds)     & 80.49\% (141.57 seconds)   \\
-	1000              & 76.12\% (153.48 seconds)    & 81.66\% (203.01 seconds)   \\
-	10000             & 82.24\% (437.41 seconds)    & 84.64\% (2023.99 seconds)  \\
-	60000             & 89.15\% (1914.78 seconds)   & 89.49\% (11683.14 seconds) \\
-    \end{tabular}
-\end{table}
+    \begin{tabular}{l|l|l}
+    Training Quantity & Perceptron (without tuning) & Perceptron (with tuning)  \\ \hline
+    100               & 60.5\% (107.21 seconds)     & 66.45\% (90.84 seconds)    \\
+    500               & 80.6\% (120.18 seconds)     & 80.49\% (141.57 seconds)   \\
+    1000              & 73.42\% (133.61 seconds)    & 81.66\% (203.01 seconds)   \\
+    10000             & 84.22\% (406.90 seconds)    & 84.64\% (2023.99 seconds)  \\
+    60000             & 89.15\% (1914.78 seconds)   & 89.49\% (11683.14 seconds) \\
+    \end{tabular}\end{table}
+    
+         \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../graphs/tuning.png}
+    \caption{The Effects of Tuning}
+    \label{fig:awesome_image}
+    \end{figure}
+\newpage
      \subsection*{Conclusion}
      In the end, we were able to reach an 89.49\% maximum recognition on the test set with a perceptron. This is a relatively high recognition on a fairly complex dataset, which we were surprised to find, especially considering fairly myopic features. However, there is considerable room for improvement.
 

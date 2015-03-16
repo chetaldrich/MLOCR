@@ -13,9 +13,13 @@
 *.fls
 *.pdf
 *.out
+graphs/._pvsnb.png
+graphs/._tuning.png
+Report/._report.tex
 
 # MNIST Data Files
 *-ubyte
 
 # Testing File
 test.py
+
