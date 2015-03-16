@@ -45,7 +45,7 @@ All parameters that are available for use:
 
 * `-a` Tune iterations/Laplace smoothing while training
 
-* `-u` Use pre-learned weights for the perceptron. These were created after training the program for about 3 hours on all of the training data, and this option is available so you can see the results of the classifier without having to wait for the perceptron to train.
+* `-u` Use pre-learned weights for the chosen classifier. These were created after training the program over all of the training data. This is available so you can see the results of an optimized classifier without having to wait for the classifiers to train.
 
 * `--pixels` Chops off some pixels from the edges of each image to improve processing time. Sometimes leads to a slight loss in accuracy. Options are 1-12 pixels.
 

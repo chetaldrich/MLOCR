@@ -58,17 +58,17 @@
         60000             & 84.31\% (632.77 seconds)  & 89.49\% (11683.14 seconds) \\
         \end{tabular}
      \end{table}
-     
+
      \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{../graphs/pvsnb.png}
     \caption{Comparing Perceptron and Naive Bayes}
     \label{fig:awesome_image}
     \end{figure}
-     
+
      We tried a significant number of different training quantities in order to see what was optimal given the training set and time. In terms of total percentage correct, the perceptron led with a slight edge over Naive Bayes with many training examples. However, you'll notice that the Naive Bayes algorithm was much more time efficient to reach a similar level of accuracy. A telling example of this phenomenon are the results with 5000 training instances. Both classifiers reach a similar level of accuracy, but the perceptron took nearly 5 times as long to reach that level of accuracy. In fact, you can see this problem magnifies with larger amounts of training data.
 
-     In the test setting, it was clear that Naive Bayes was much faster given large datasets. However, in many cases we would be allowed to train the classifier prior to using it on data, and this is where the perceptron shines. The classification of test data is very quick with the perceptron, and if we use pretrained values, we can have a more accurate classifier without much of a sacrifice in time other than the initial training time. Running perceptron with pre trained weights only took 26.13 seconds. In this case Naive Bayes loses its edge, taking 191.76 seconds.
+     In our test setting, it was clear that Naive Bayes was much faster given large datasets. However, in many cases we would be allowed to train the classifier prior to using it on data, and this is where the perceptron shines. The classification of test data is very quick with the perceptron, and if we use pretrained values, we can have a more accurate classifier without much of a sacrifice in time other than the initial training time. Running perceptron with pre trained weights only took 26.13 seconds. In this case Naive Bayes loses its edge, taking 191.76 seconds.
      \begin{table}[h!]
      	\centering
     	\begin{tabular}{l|l|l}
@@ -90,14 +90,16 @@
     10000             & 84.22\% (406.90 seconds)    & 84.64\% (2023.99 seconds)  \\
     60000             & 89.15\% (1914.78 seconds)   & 89.49\% (11683.14 seconds) \\
     \end{tabular}\end{table}
-    
-         \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{../graphs/tuning.png}
-    \caption{The Effects of Tuning}
-    \label{fig:awesome_image}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.8\textwidth]{../graphs/tuning.png}
+      \caption{The Effects of Tuning}
     \end{figure}
-\newpage
+    \newpage
+    Additionally, it became clear during our testing that tuning made classifications of the test data much more accurate given smaller training sets.
+
+    In our case, this seems straightforward. Given less data, accounting for the lack of examples by doing more training or accounting for possibilities that weren't in the training data was helpful for accuracy. However, we noticed that the effects of tuning leveled off considerably as more test examples were included, to the point where it had virtually no effect at all when using 60000 training examples.
      \subsection*{Conclusion}
      In the end, we were able to reach an 89.49\% maximum recognition on the test set with a perceptron. This is a relatively high recognition on a fairly complex dataset, which we were surprised to find, especially considering fairly myopic features. However, there is considerable room for improvement.
 
