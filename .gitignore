@@ -12,6 +12,7 @@
 *.fdb_latexmk
 *.fls
 *.pdf
+*.out
 
 # MNIST Data Files
 *-ubyte
