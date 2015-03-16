@@ -1,3 +1,12 @@
+# util.py
+# -----------------
+# Main file for various convenience methods used in the machine learning
+# algorithms and elsewhere.
+#
+# Thanks to the Berkeley AI projects for most of the methods in this class.
+#
+# Chet Aldrich, Laura Biester
+
 import inspect
 import sys
 

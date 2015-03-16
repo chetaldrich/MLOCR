@@ -1,3 +1,11 @@
+# perceptron.py
+# -----------------
+# Main file for the Perceptron algorithm methods.
+# Thanks to the Berkeley AI projects for general code structure.
+#
+# Chet Aldrich, Laura Biester
+
+
 import util
 import perceptronWeights
 from loadFeatures import *

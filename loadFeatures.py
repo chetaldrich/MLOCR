@@ -1,3 +1,10 @@
+# loadFeatures.py
+# -----------------
+# Main file for parsing data from the MNIST dataset, and passing it onto the
+# machine learning algorithms.
+# 
+# Chet Aldrich, Laura Biester
+
 from mnist import *
 from util import Counter
 from progressBar import ProgressBar

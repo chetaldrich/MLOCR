@@ -1,3 +1,10 @@
+# naivebayes.py
+# -----------------
+# Main file for the Naive Bayes algorithm methods.
+# Thanks to the Berkeley AI projects for general code structure.
+#
+# Chet Aldrich, Laura Biester
+
 from loadFeatures import *
 from progressBar import ProgressBar
 import util

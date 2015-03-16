@@ -1,12 +1,12 @@
-############
 # loadMNISTData.sh
-#
+# -----------------
 # Once downloaded, use the following commands to execute inside the repository to load # the MNIST data for use in the application:
 #
 # $ chmod +x loadMNISTData.sh
 # $ ./loadMNISTData.sh
 #
-############
+# Chet Aldrich, Laura Biester
+
 
 
 mkdir mnist/

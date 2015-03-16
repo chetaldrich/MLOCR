@@ -1,3 +1,9 @@
+# dataClassifier.py
+# -----------------
+# Main execution file for machine learning algorithms in MLOCR.
+#
+# Chet Aldrich, Laura Biester
+
 import naivebayes
 import perceptron
 import loadFeatures

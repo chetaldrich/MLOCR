@@ -1,4 +1,11 @@
-# thanks to http://g.sweyla.com/blog/2012/mnist-numpy/
+# mnist.py
+# --------
+# File that parses the data files given by MNIST and turns them into numpy arrays
+# usable by the program.
+#
+# Thanks to http://g.sweyla.com/blog/2012/mnist-numpy/ for the script
+#
+# Chet Aldrich, Laura Biester
 
 import os, struct
 from array import array as pyarray

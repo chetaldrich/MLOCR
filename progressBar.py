@@ -1,3 +1,9 @@
+# progressBar.py
+# -----------------
+# Main file for the progress bar used for showing progress throughout the program.
+#
+# Chet Aldrich, Laura Biester
+
 import sys
 
 class ProgressBar:
