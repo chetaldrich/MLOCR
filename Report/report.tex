@@ -33,7 +33,13 @@
 
      Despite the lack of clarity as to whether such features would be realistic, we tried a few machine learning algorithms on the dataset to see if we could produce any meaningful results.
      \subsection*{Implementation}
-
+	We started by getting data from the MMIST data set and figuring out how to process it. We ended up using a script that turned the MNIST data into a NumPy array. The arrays held images and their corresponding labels.
+	
+	Images were stored as 28x28 arrays of information about pixels, which were numbers from 0 to 1. For our project, we considered 0 to be a white pixel and anything above 0 to be a black pixel. From there, we created features based off of the placements of pixels on the screen.
+	
+	We then wrote two machine learning algorithms, Naive Bayes and Perceptron. We ran the data through those two classifiers, and compared their results. These two algorithms, with binary on/off features for each pixel, led to our best results.
+	
+	Over the course of the project, we also explored more classifiers and features. We tried a decision tree, but were not able to achieve above 50\% accuracy using all of the data, which made us feel that it was perhaps not the best classifier for our purposes. We also explored adding a feature to determine if there were any enclosed spaces in the number. However, our algorithm for finding enclosed spaces did not perform the way we has initially expected it to, because we were looking for ``on'' pixels to each side (NSEW) of an ``off'' pixel. We realized that this could be true in almost any number, excluding ones, because of curves. We decided that a more complicated implementation would slow down our code too much, so we did not include it in our final code.
      \subsection*{Results}
      \begin{table}[h!]
         \centering
