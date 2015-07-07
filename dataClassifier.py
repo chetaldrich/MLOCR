@@ -6,6 +6,7 @@
 
 import naivebayes
 import perceptron
+import neuralnet
 import loadFeatures
 import argparse
 import time
@@ -25,7 +26,7 @@ def readCommand():
     parser = argparse.ArgumentParser()
 
     # `-c` selects the classifier (`naivebayes` and `perceptron` are options)
-    parser.add_argument("-c", type = str, choices=["naivebayes", "perceptron"], help="selects the classifier for use with the MNIST data")
+    parser.add_argument("-c", type = str, choices=["naivebayes", "perceptron", "neuralnet"], help="selects the classifier for use with the MNIST data")
 
     # `-a` Tune iterations/Laplace smoothing while training
     parser.add_argument("-a", action="store_true", default=False, help="tune while training")
@@ -41,7 +42,7 @@ def readCommand():
 
     # `--test` selects the number of test data samples to be used by the classifier
     parser.add_argument("--test", type = int,  help="selects the number of testing data samples to be used by the classifier")
-    
+
     # '-i' gives information about most frequent incorrect classifications
     parser.add_argument("-i", action="store_true", default=False, help="gives information about most frequent incorrect classifications")
 
@@ -61,6 +62,31 @@ def readCommand():
         runNaiveBayes(numTrainValues, numTestValues, pixels, args.a, args.u, args.i)
     elif args.c == "perceptron":
         runPerceptron(numTrainValues, numTestValues, pixels, args.a, args.u, args.i)
+    elif args.c == "neuralnet":
+        runNeuralNet(numTrainValues, numTestValues, pixels, args.a, args.u, args.i)
+
+def runNeuralNet(numTrainValues, numTestValues, pixels, tune, useTrainedWeights, info):
+    """
+    runNeuralNet() runs the neural net machine learning algorithm on the MNIST
+    dataset.
+    """
+    # TODO: Add the rest of the params to function argument.
+
+    t = time.clock()
+    neuralClassifier = neuralnet.NeuralNet(range(10))
+
+    print "Loading Testing Data....\n"
+    trainingData, trainingLabels, validationData, validationLabels, features = loadFeatures.loadTrainingData(numTrainValues, pixels, tune)
+
+    print "Loading Testing Data....\n"
+    testingData, testingLabels = loadFeatures.loadTestingData(numTestValues, pixels)
+
+    print "Testing Neural Net....\n"
+    classifiedData = neuralClassifier.classify(testingData)
+    test(classifiedData, testingLabels, info)
+
+    print "Total Time {0}".format(time.clock() - t)
+
 
 def runPerceptron(numTrainValues, numTestValues, pixels, tune, useTrainedWeights, info):
     """
@@ -113,7 +139,7 @@ def runNaiveBayes(numTrainValues, numTestValues, pixels, tune, useTrainedProbs, 
     info -- boolean to get information about common classification mistakes
     """
     t = time.clock()
-    
+
     naiveBayesClassifier = naivebayes.NaiveBayes(range(10))
 
     if useTrainedProbs:
@@ -161,23 +187,23 @@ def test(classifiedData, testingLabels, info):
     print "Percent of Correct Classifications"
     print "=================================="
     print float(countCorrect) / len(testingLabels) * 100.0
-                     
+
     if info:
-        
+
         getInfo(problems)
-                     
+
 def getInfo(problems):
     """
     getInfo() prints out, in order, all incorrect classifications
     """
-    
+
     print "Common Problems with Classification"
     print "==================================="
-    
+
     # sort by number of problems of each type, in decreasing order
     sorted_problems = sorted(problems.items(), key=operator.itemgetter(1))
     sorted_problems.reverse()
-    
+
     # print out the top 10 issues
     counter = 0
     for problem in sorted_problems:
