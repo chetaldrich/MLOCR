@@ -12,7 +12,7 @@ import random
 
 def loadTrainingData(n=None, pixels=0, tune=False):
     """
-    loadTrainingData() pulls trainig data from MNIST training set, splits it into training and
+    loadTrainingData() pulls training data from MNIST training set, splits it into training and
     validation data, then parses the data into features
     """
     # load data from MNIST files
@@ -97,7 +97,7 @@ def defineFeatures(imageList, chop):
     progressBar.clear()
 
     # Here, we create a list of all of the features for use in the
-    # perceptron and Naive Bayes classifiers. 
+    # perceptron and Naive Bayes classifiers.
     if len(imageList) > 0:
         image = imageList[0]
         for x in range(chop, len(image) - chop):
@@ -116,7 +116,7 @@ def getFeatureList():
     for x in range(28):
         for y in range(28):
             features.append((x,y))
-            
+
     return features
 
 def main():
