@@ -18,6 +18,8 @@ class NeuralNet:
     def __init__(self, legalLabels):
         self.legalLabels = legalLabels
         self.layer_sizes, self.biases, self.weights = self.initWeights()
+        self.vector_sigmoid = np.vectorize(sigmoid)
+        self.vector_dsigmoid = np.vectorize(dsigmoid)
 
     def initWeights(self):
         layer_sizes = [10, 15, 10]
@@ -50,3 +52,9 @@ class NeuralNet:
 
         progressBar.clear()
         return guesses
+
+    def sigmoid(self, x):
+        return 1.0 / (1.0 + np.exp(-x))
+
+    def dsigmoid(self, x):
+        return sigmoid(x) * (1 - sigmoid(x))
